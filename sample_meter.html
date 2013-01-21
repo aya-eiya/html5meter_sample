@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Canvasを使用したメーター表示のサンプル</title>
+<script src="./meter.js"></script>
+</head>
+<body>
+<h1>Canvasを使用したメーター表示のサンプル</h1>
+<p>Canvasを使用して円形にトリムした画像の周りにメーターを表示します。</p>
+<section>
+<h2>使用方法サンプル</h2>
+<textarea id="code_sample" style="width:80%;height:148px;font-size:12pt;">
+<script src="./meter.js"></script>
+<script>    
+    var size = 180;
+    var percent = 80;
+    var imageSrc = 'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1';
+    setMeter('meter',size,imageSrc,percent);
+</script>
+</textarea>
+<div id="meter"></div>
+<script>
+    var size = 180;
+    var percent = 80;
+    setMeter('meter',size,'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1',percent);
+</script>
+</section>
+<section>
+<h2>サイズ別表示サンプル</h2>
+<table id="display" border="1">
+    <tr><th>サイズ</th><th>表示</th><th>見た目</th></tr>
+</table>
+<script>
+    var display = document.getElementById('display');
+    for(var size = 50;size <= 320;size += 20){
+	var tr = '<tr><td rowspan="10">'+size+' px</td>';
+	for(var percent = 10;percent<=100;percent+=10){
+	    tr += '<td>'+percent+' %</td><td><div id="meter_'+size+'_'+percent+'"></div></td></tr><tr>';
+	}
+	display.innerHTML += tr.replace(/<tr>$/,'');
+    }
+    for(var size = 50;size <= 320;size += 20){
+	for(var percent = 10;percent<=100;percent+=10){
+	    setMeter('meter_'+size+'_'+percent,size,'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1',percent);
+	}
+    }
+</script>
+</section>
+</body>
+</html>
