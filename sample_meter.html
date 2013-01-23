@@ -2,27 +2,64 @@
 <html>
 <head>
 <title>Canvasを使用したメーター表示のサンプル</title>
-<script src="./meter.js"></script>
+<script src="./javascripts/meter.js"></script>
 </head>
 <body>
 <h1>Canvasを使用したメーター表示のサンプル</h1>
 <p>Canvasを使用して円形にトリムした画像の周りにメーターを表示します。</p>
 <section>
 <h2>使用方法サンプル</h2>
-<textarea id="code_sample" style="width:80%;height:148px;font-size:12pt;">
-<script src="./meter.js"></script>
-<script>    
+<textarea id="code_sample" style="width:80%;height:178px;font-size:12pt;">
+<script src="./javascripts/meter.js"></script>
+<div id="meter"></div>
+<script>
     var size = 180;
     var percent = 80;
     var imageSrc = 'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1';
-    setMeter('meter',size,imageSrc,percent);
+    var meter = setMeter('meter',size,imageSrc,percent);
 </script>
 </textarea>
 <div id="meter"></div>
 <script>
     var size = 180;
     var percent = 80;
-    setMeter('meter',size,'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1',percent);
+    var imageSrc = 'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1';
+    var meter = setMeter('meter',size,imageSrc,percent);
+    this.setSize = function(size){
+	if(size && 50 < size){
+	    meter.setSize(parseInt(size));
+	}
+    };
+    this.setImage = function(imageSrc){
+	meter.setImage(imageSrc);
+    };
+    this.setPercentage = function(percent){
+	if(0 <= percent && percent <= 100){
+	    meter.setPercentage(percent);
+	}
+    };
+</script>
+image:<input type="text" id="image"     onChange="setImage(this.value)" value="https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1">
+size:<input type="text" id="size"       onChange="setSize(this.value);" value="180" />
+percent:<input type="text" id="percent" onChange="setPercentage(this.value);" value="80" />
+</section>
+<section>
+<h2>動かしてみるサンプル</h2>
+<div id="meter_move"></div>
+<script>
+(function(){
+    var size = 180;
+    var percent = 0;
+    var imageSrc = 'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1';
+    var meter = setMeter('meter_move',size,imageSrc,percent);
+    var flag = true;
+    setInterval(function(){
+	if(flag) percent++;
+	else     percent--;
+	meter.setPercentage(percent);
+	if(percent >= 100 || percent <= 0) flag = !flag;	
+    },30);
+})();
 </script>
 </section>
 <section>
