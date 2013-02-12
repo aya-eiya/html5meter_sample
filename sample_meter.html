@@ -44,6 +44,16 @@ size:<input type="text" id="size"       onChange="setSize(this.value);" value="1
 percent:<input type="text" id="percent" onChange="setPercentage(this.value);" value="80" />
 </section>
 <section>
+<h2>オートアニメーションのサンプル</h2>
+<div id="meter_auto"></div>
+<script>
+    var size = 180;
+    var percent = 80;
+    var imageSrc = 'https://www.dropbox.com/s/0o3qka5gh2fg5hq/Geesugitan_face.png?dl=1';
+    var meter = setMeter('meter_auto',size,imageSrc,percent,true);
+</script>
+</section>
+<section>
 <h2>動かしてみるサンプル</h2>
 <div id="meter_move"></div>
 <script>
