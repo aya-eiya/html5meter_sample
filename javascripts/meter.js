@@ -12,7 +12,7 @@
     var transparent = "rgba(0,0,0,0)";
     var meterColor = "rgb(255,128,128)";
     var meterWidth = 16;
-    var autoAnimationSpeed = 500; // 1 - 1000
+    var autoAnimationTime = 1000; // 1 - 5000
     var digs = {0:0,90:Math.PI/2,180:Math.PI,360:Math.PI*2};
 
     var margin = 0;
@@ -35,8 +35,10 @@
 
     var setMerterValue = function(){
       var tmpPercent = (isAutoAnimation)?0:percent;
+      var startTime = new Date().getTime();
+      var leftTime = autoAnimationTime
       var onTimeout = function(){
-        tmpPercent += 5;
+        tmpPercent += 1;
         if(tmpPercent > percent) tmpPercent = percent;
         context.strokeStyle = meterColor;
         context.lineWidth = meterWidth;
@@ -46,7 +48,12 @@
         context.arc(size/2 + margin,size/2 + margin,size/2 - meterWidth/2, lDig,rDig);
         context.stroke();
         if(isAutoAnimation) setTextArea(); // 妥協
-        if(tmpPercent < percent) setTimeout(onTimeout,1000/autoAnimationSpeed);
+        var nowTime = new Date().getTime();
+        leftTime = autoAnimationTime + (startTime - nowTime);
+        if(tmpPercent < percent){
+          var waitTime = leftTime / (100 - tmpPercent);
+          setTimeout(onTimeout,waitTime);
+        }
       };
       onTimeout();
     };
@@ -88,8 +95,8 @@
 
     var setAutoAnimationStatus = function(){
       if(isAutoAnimation){
-        autoAnimationSpeed = (autoAnimationSpeed < 1)?1:autoAnimationSpeed;
-        autoAnimationSpeed = (autoAnimationSpeed > 1000)?1000:autoAnimationSpeed;
+        autoAnimationTime = (autoAnimationTime < 0)?0:autoAnimationTime;
+        autoAnimationTime = (autoAnimationTime > 5000)?5000:autoAnimationTime;
       }
     };
 
